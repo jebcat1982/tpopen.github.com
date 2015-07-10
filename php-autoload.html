@@ -1,25 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>php类的自动载入</title>
-</head>
-<body>
-<div class="md-section-divider"></div><div class="md-section-divider"></div><h1 data-anchor-id="mhl3" id="php类的自动载入">php类的自动载入</h1><hr><p data-anchor-id="vet4">最早的载入是依赖人工include,文件目录越来越多的时候，这样管理起来不方便。假如删除了某个文件会引发致命错误。</p><div class="md-section-divider"></div><h2 data-anchor-id="xd3u" id="我们分两部分来说下自动载入">我们分两部分来说下自动载入</h2><div class="md-section-divider"></div><h3 data-anchor-id="tgih" id="1利用php的autoload已废除">1.利用php的__autoload,已废除。</h3><pre data-anchor-id="6qgx"><code>&lt;?php
-Test::test();
+# php类的自动载入
 
-function __autoload($class){
+------
+
+最早的载入是依赖人工include,文件目录越来越多的时候，这样管理起来不方便。假如删除了某个文件会引发致命错误。
+##我们分两部分来说下自动载入
+###1.利用php的__autoload,已废除。
+    <?php
+    Test::test();
+    
+    function __autoload($class){
         requier __DIR__.'/'.$class.'.php';
-}
-</code></pre><p data-anchor-id="ceva">缺点：随着工程越来越来，不可能为每个文件都添加__autoload，重复加载会引发致辞命错误。</p><div class="md-section-divider"></div><h3 data-anchor-id="a531" id="2splautoloadregister">2.spl_autoload_register()</h3><pre data-anchor-id="bqxh"><code>&lt;?php
-spl_autoload_register('autoload');
-spl_autoload_register('autoload2');
-function autoload($class){
+    }
+缺点：随着工程越来越来，不可能为每个文件都添加__autoload，重复加载会引发致辞命错误。
+
+###2.spl_autoload_register()
+
+    <?php
+    spl_autoload_register('autoload');
+    spl_autoload_register('autoload2');
+    function autoload($class){
         requier __DIR__.'/'.$class.'.php';
     }
     function autoload2($class){
-    requier __DIR__.'/'.$class.'.php';
-}
-</code></pre><p data-anchor-id="8ymo">比第一种好点，可以多次注册。</p>
-</body>
-</html>
+        requier __DIR__.'/'.$class.'.php';
+    }
+比第一种好点，可以多次注册。
