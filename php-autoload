@@ -1,0 +1,27 @@
+# php类的自动载入
+
+------
+
+最早的载入是依赖人工include,文件目录越来越多的时候，这样管理起来不方便。假如删除了某个文件会引发致命错误。
+##我们分两部分来说下自动载入
+###1.利用php的__autoload,已废除。
+    <?php
+    Test::test();
+    
+    function __autoload($class){
+        requier __DIR__.'/'.$class.'.php';
+    }
+缺点：随着工程越来越来，不可能为每个文件都添加__autoload，重复加载会引发致辞命错误。
+
+###2.spl_autoload_register()
+
+    <?php
+    spl_autoload_register('autoload');
+    spl_autoload_register('autoload2');
+    function autoload($class){
+        requier __DIR__.'/'.$class.'.php';
+    }
+    function autoload2($class){
+        requier __DIR__.'/'.$class.'.php';
+    }
+比第一种好点，可以多次注册。
